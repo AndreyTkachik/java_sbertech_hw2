@@ -2,7 +2,6 @@ package org.example;
 
 import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONAssert;
-import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class JSONGeneratorTest {
 
-    @Test
+    @org.junit.jupiter.api.Test
     void serialize() throws InvocationTargetException, IllegalAccessException {
         String actualJSON = "{ \"author\": \"A\", \"title\": \"A\", \"pages\": 13, " +
                 "\"genres\": [\"a\",null], \"tags\": [\"aaaa\",null], \"read\": false}";
@@ -25,7 +24,7 @@ class JSONGeneratorTest {
         JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true);
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     void serializeString() throws InvocationTargetException, IllegalAccessException {
         String actualJSON = "{ \"author\": \"A\", \"title\": null, \"pages\": 0, " +
                 "\"genres\": null, \"tags\": null, \"read\": false}";
@@ -34,8 +33,8 @@ class JSONGeneratorTest {
         JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true);
     }
 
-    @Test
-    void serializeCollection() throws InvocationTargetException, IllegalAccessException {
+    @org.junit.jupiter.api.Test
+    void serialiseCollection() throws InvocationTargetException, IllegalAccessException {
         String actualJSON = "{ \"author\": null, \"title\": null, \"pages\": 0, " +
                 "\"genres\": [\"a\",null], \"tags\": null, \"read\": false}";
         List<String> list = new ArrayList<>();
@@ -46,8 +45,8 @@ class JSONGeneratorTest {
         JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true);
     }
 
-    @Test
-    void serializeArray() throws InvocationTargetException, IllegalAccessException {
+    @org.junit.jupiter.api.Test
+    void serialiseArray() throws InvocationTargetException, IllegalAccessException {
         String actualJSON = "{ \"author\": null, \"title\": null, \"pages\": 0, " +
                 "\"genres\": null, \"tags\": [\"aaaa\",null], \"read\": false}";
         String[] Array = {"aaaa", null};
@@ -56,8 +55,8 @@ class JSONGeneratorTest {
         JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true);
     }
 
-    @Test
-    void serializePrimitive() throws InvocationTargetException, IllegalAccessException {
+    @org.junit.jupiter.api.Test
+    void serialisePrimitive() throws InvocationTargetException, IllegalAccessException {
         String actualJSON = "{ \"author\": null, \"title\": null, \"pages\": 1234124, " +
                 "\"genres\": null, \"tags\": null, \"read\": true}";
         BookTest book1 = new BookTest(null, null, 1234124, null, null, true);
@@ -65,8 +64,8 @@ class JSONGeneratorTest {
         JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true);
     }
 
-    @Test
-    void serializeObject() throws InvocationTargetException, IllegalAccessException {
+    @org.junit.jupiter.api.Test
+    void serialiseObject() throws InvocationTargetException, IllegalAccessException {
         String actualJSON = "{ \"author\": \"A\", \"title\": \"A\", \"pages\": 13, " +
                 "\"genres\": [\"a\",null], \"tags\": [\"aaaa\",null], \"read\": false}";
         List<String> list = new ArrayList<>();
@@ -78,7 +77,7 @@ class JSONGeneratorTest {
         JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true);
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     void checkPrimitive() throws InvocationTargetException, IllegalAccessException {
         String actualJSON = "{ \"author\": \"A\", \"title\": \"A\", \"pages\": 13, " +
                 "\"genres\": [\"a\",null], \"tags\": [\"aaaa\",null], \"read\": false}";
@@ -91,7 +90,7 @@ class JSONGeneratorTest {
         JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true);
     }
 
-    @oTest
+    @org.junit.jupiter.api.Test
     void generateJSON() throws InvocationTargetException, IllegalAccessException {
         String actualJSON = "{ \"author\": \"A\", \"title\": \"A\", \"pages\": 13, " +
                 "\"genres\": [\"a\",null], \"tags\": [\"aaaa\",null], \"read\": false}";

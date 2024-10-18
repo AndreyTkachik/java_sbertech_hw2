@@ -9,13 +9,13 @@ public interface Serializer {
 
     String serializeString(Object obj);
 
-    String serializeCollection(Object obj) throws IllegalAccessException, InvocationTargetException;
+    String serialiseCollection (Object obj) throws IllegalAccessException, InvocationTargetException;
 
-    String serializeArray(Object obj) throws IllegalAccessException, InvocationTargetException;
+    String serialiseArray (Object obj) throws IllegalAccessException, InvocationTargetException;
 
-    String serializePrimitive(Object obj);
+    String serialisePrimitive (Object obj);
 
-    String serializeObject(Object obj) throws IllegalAccessException, InvocationTargetException;
+    String serialiseObject (Object obj) throws IllegalAccessException, InvocationTargetException;
 
     boolean checkPrimitive (Object obj);
 }
