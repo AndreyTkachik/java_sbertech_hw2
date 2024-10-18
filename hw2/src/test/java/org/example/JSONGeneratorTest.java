@@ -8,10 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 class JSONGeneratorTest {
 
-    @org.junit.jupiter.api.Test
+    @Test
     void serialize() throws InvocationTargetException, IllegalAccessException {
         String actualJSON = "{ \"author\": \"A\", \"title\": \"A\", \"pages\": 13, " +
                 "\"genres\": [\"a\",null], \"tags\": [\"aaaa\",null], \"read\": false}";
@@ -24,7 +25,7 @@ class JSONGeneratorTest {
         JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void serializeString() throws InvocationTargetException, IllegalAccessException {
         String actualJSON = "{ \"author\": \"A\", \"title\": null, \"pages\": 0, " +
                 "\"genres\": null, \"tags\": null, \"read\": false}";
@@ -33,7 +34,7 @@ class JSONGeneratorTest {
         JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void serialiseCollection() throws InvocationTargetException, IllegalAccessException {
         String actualJSON = "{ \"author\": null, \"title\": null, \"pages\": 0, " +
                 "\"genres\": [\"a\",null], \"tags\": null, \"read\": false}";
@@ -45,7 +46,7 @@ class JSONGeneratorTest {
         JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void serialiseArray() throws InvocationTargetException, IllegalAccessException {
         String actualJSON = "{ \"author\": null, \"title\": null, \"pages\": 0, " +
                 "\"genres\": null, \"tags\": [\"aaaa\",null], \"read\": false}";
@@ -55,7 +56,7 @@ class JSONGeneratorTest {
         JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void serialisePrimitive() throws InvocationTargetException, IllegalAccessException {
         String actualJSON = "{ \"author\": null, \"title\": null, \"pages\": 1234124, " +
                 "\"genres\": null, \"tags\": null, \"read\": true}";
@@ -64,7 +65,7 @@ class JSONGeneratorTest {
         JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void serialiseObject() throws InvocationTargetException, IllegalAccessException {
         String actualJSON = "{ \"author\": \"A\", \"title\": \"A\", \"pages\": 13, " +
                 "\"genres\": [\"a\",null], \"tags\": [\"aaaa\",null], \"read\": false}";
@@ -77,7 +78,7 @@ class JSONGeneratorTest {
         JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void checkPrimitive() throws InvocationTargetException, IllegalAccessException {
         String actualJSON = "{ \"author\": \"A\", \"title\": \"A\", \"pages\": 13, " +
                 "\"genres\": [\"a\",null], \"tags\": [\"aaaa\",null], \"read\": false}";
@@ -90,7 +91,7 @@ class JSONGeneratorTest {
         JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void generateJSON() throws InvocationTargetException, IllegalAccessException {
         String actualJSON = "{ \"author\": \"A\", \"title\": \"A\", \"pages\": 13, " +
                 "\"genres\": [\"a\",null], \"tags\": [\"aaaa\",null], \"read\": false}";

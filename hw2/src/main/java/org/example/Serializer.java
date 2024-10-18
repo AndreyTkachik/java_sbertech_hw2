@@ -1,7 +1,6 @@
 package org.example;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Type;
 
 public interface Serializer {
 
@@ -9,13 +8,13 @@ public interface Serializer {
 
     String serializeString(Object obj);
 
-    String serialiseCollection (Object obj) throws IllegalAccessException, InvocationTargetException;
+    String serializeCollection(Object obj) throws IllegalAccessException, InvocationTargetException;
 
-    String serialiseArray (Object obj) throws IllegalAccessException, InvocationTargetException;
+    String serializeArray(Object obj) throws IllegalAccessException, InvocationTargetException;
 
-    String serialisePrimitive (Object obj);
+    String serializePrimitive(Object obj);
 
-    String serialiseObject (Object obj) throws IllegalAccessException, InvocationTargetException;
+    String serializeObject(Object obj) throws IllegalAccessException, InvocationTargetException;
 
     boolean checkPrimitive (Object obj);
 }

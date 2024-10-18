@@ -12,15 +12,15 @@ public class JSONGenerator implements Serializer {
         }
         Class<?> clazz = obj.getClass();
         if (clazz.isArray()) {
-            return serialiseArray(obj);
+            return serializeArray(obj);
         } else if (checkPrimitive(obj)) {
-            return serialisePrimitive(obj);
+            return serializePrimitive(obj);
         } else if (obj instanceof String) {
             return serializeString(obj);
         } else if (obj instanceof Collection) {
-            return serialiseCollection(obj);
+            return serializeCollection(obj);
         }
-        return serialiseObject(obj);
+        return serializeObject(obj);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class JSONGenerator implements Serializer {
     }
 
     @Override
-    public String serialiseCollection(Object obj) throws IllegalAccessException, InvocationTargetException {
+    public String serializeCollection(Object obj) throws IllegalAccessException, InvocationTargetException {
         StringBuilder builder = new StringBuilder();
         builder.append("[");
         Iterator<?> it = ((Collection<?>) obj).iterator();
@@ -44,7 +44,7 @@ public class JSONGenerator implements Serializer {
     }
 
     @Override
-    public String serialiseArray(Object obj) throws IllegalAccessException, InvocationTargetException {
+    public String serializeArray(Object obj) throws IllegalAccessException, InvocationTargetException {
         StringBuilder builder = new StringBuilder();
         builder.append("[");
         for (int indx = 0; indx < Array.getLength(obj); ++indx) {
@@ -58,12 +58,12 @@ public class JSONGenerator implements Serializer {
     }
 
     @Override
-    public String serialisePrimitive(Object obj) {
+    public String serializePrimitive(Object obj) {
         return obj.toString();
     }
 
     @Override
-    public String serialiseObject(Object obj) throws IllegalAccessException, InvocationTargetException {
+    public String serializeObject(Object obj) throws IllegalAccessException, InvocationTargetException {
         Class<?> clazz = obj.getClass();
         Method[] methods = clazz.getDeclaredMethods();
         List<Method> methodList = new ArrayList<>();
@@ -117,6 +117,6 @@ public class JSONGenerator implements Serializer {
         if (obj == null) {
             return "null";
         }
-        return serialiseObject(obj);
+        return serializeObject(obj);
     }
 }
