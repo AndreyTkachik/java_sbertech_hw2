@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 class JSONGeneratorTest {
 
     @Test
-    void serialize() throws InvocationTargetException, IllegalAccessException {
+    void serialize() {
         String actualJSON = "{ \"author\": \"A\", \"title\": \"A\", \"pages\": 13, " +
                 "\"genres\": [\"a\",null], \"tags\": [\"aaaa\",null], \"read\": false}";
         List<String> list = new ArrayList<>();
@@ -22,20 +22,20 @@ class JSONGeneratorTest {
         String[] Array = {"aaaa", null};
         BookTest book1 = new BookTest("A", "A", 13, list, Array, false);
         JSONGenerator test = new JSONGenerator();
-        JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true);
+        assertDoesNotThrow(() -> JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true));
     }
 
     @Test
-    void serializeString() throws InvocationTargetException, IllegalAccessException {
+    void serializeString() {
         String actualJSON = "{ \"author\": \"A\", \"title\": null, \"pages\": 0, " +
                 "\"genres\": null, \"tags\": null, \"read\": false}";
         BookTest book1 = new BookTest(null, "A", 0, null, null, false);
         JSONGenerator test = new JSONGenerator();
-        JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true);
+        assertDoesNotThrow(() -> JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true));
     }
 
     @Test
-    void serialiseCollection() throws InvocationTargetException, IllegalAccessException {
+    void serialiseCollection() {
         String actualJSON = "{ \"author\": null, \"title\": null, \"pages\": 0, " +
                 "\"genres\": [\"a\",null], \"tags\": null, \"read\": false}";
         List<String> list = new ArrayList<>();
@@ -43,30 +43,30 @@ class JSONGeneratorTest {
         list.add(null);
         BookTest book1 = new BookTest(null, null, 0, list, null, false);
         JSONGenerator test = new JSONGenerator();
-        JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true);
+        assertDoesNotThrow(() -> JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true));
     }
 
     @Test
-    void serialiseArray() throws InvocationTargetException, IllegalAccessException {
+    void serialiseArray() {
         String actualJSON = "{ \"author\": null, \"title\": null, \"pages\": 0, " +
                 "\"genres\": null, \"tags\": [\"aaaa\",null], \"read\": false}";
         String[] Array = {"aaaa", null};
         BookTest book1 = new BookTest(null, null, 0, null, Array, false);
         JSONGenerator test = new JSONGenerator();
-        JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true);
+        assertDoesNotThrow(() ->  JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true));
     }
 
     @Test
-    void serialisePrimitive() throws InvocationTargetException, IllegalAccessException {
+    void serialisePrimitive() {
         String actualJSON = "{ \"author\": null, \"title\": null, \"pages\": 1234124, " +
                 "\"genres\": null, \"tags\": null, \"read\": true}";
         BookTest book1 = new BookTest(null, null, 1234124, null, null, true);
         JSONGenerator test = new JSONGenerator();
-        JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true);
+        assertDoesNotThrow(() -> JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true));
     }
 
     @Test
-    void serialiseObject() throws InvocationTargetException, IllegalAccessException {
+    void serialiseObject() {
         String actualJSON = "{ \"author\": \"A\", \"title\": \"A\", \"pages\": 13, " +
                 "\"genres\": [\"a\",null], \"tags\": [\"aaaa\",null], \"read\": false}";
         List<String> list = new ArrayList<>();
@@ -75,11 +75,11 @@ class JSONGeneratorTest {
         String[] Array = {"aaaa", null};
         BookTest book1 = new BookTest("A", "A", 13, list, Array, false);
         JSONGenerator test = new JSONGenerator();
-        JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true);
+        assertDoesNotThrow(() -> JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true));
     }
 
     @Test
-    void checkPrimitive() throws InvocationTargetException, IllegalAccessException {
+    void checkPrimitive() {
         String actualJSON = "{ \"author\": \"A\", \"title\": \"A\", \"pages\": 13, " +
                 "\"genres\": [\"a\",null], \"tags\": [\"aaaa\",null], \"read\": false}";
         List<String> list = new ArrayList<>();
@@ -88,11 +88,11 @@ class JSONGeneratorTest {
         String[] Array = {"aaaa", null};
         BookTest book1 = new BookTest("A", "A", 13, list, Array, false);
         JSONGenerator test = new JSONGenerator();
-        JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true);
+        assertDoesNotThrow(() -> JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true));
     }
 
     @Test
-    void generateJSON() throws InvocationTargetException, IllegalAccessException {
+    void generateJSON() {
         String actualJSON = "{ \"author\": \"A\", \"title\": \"A\", \"pages\": 13, " +
                 "\"genres\": [\"a\",null], \"tags\": [\"aaaa\",null], \"read\": false}";
         List<String> list = new ArrayList<>();
@@ -101,6 +101,6 @@ class JSONGeneratorTest {
         String[] Array = {"aaaa", null};
         BookTest book1 = new BookTest("A", "A", 13, list, Array, false);
         JSONGenerator test = new JSONGenerator();
-        JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true);
+        assertDoesNotThrow(() -> JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true));
     }
 }

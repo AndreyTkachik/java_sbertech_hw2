@@ -68,7 +68,8 @@ public class JSONGenerator implements Serializer {
         Method[] methods = clazz.getDeclaredMethods();
         List<Method> methodList = new ArrayList<>();
         for (Method method : methods) {
-            if (method.getName().startsWith("get") || method.getName().startsWith("is")) {
+            if ((method.getName().startsWith("get") || method.getName().startsWith("is"))
+                && method.canAccess(obj)) {
                 methodList.add(method);
             }
         }
@@ -78,7 +79,6 @@ public class JSONGenerator implements Serializer {
         StringBuilder builder = new StringBuilder();
         builder.append("{\n");
         for (int indx = 0; indx < methodList.size(); ++indx) {
-            methodList.get(indx).setAccessible(true);
             Object methodProduct = methodList.get(indx).invoke(obj);
             String methodName = null;
             if (methodList.get(indx).getName().startsWith("get")) {
