@@ -102,14 +102,14 @@ public class JSONGenerator implements Serializer {
 
     @Override
     public boolean checkPrimitive(Object obj) {
-        return obj.getClass().isPrimitive() ||
-                obj instanceof Integer ||
+        return obj instanceof Integer ||
                 obj instanceof Double ||
                 obj instanceof Boolean ||
                 obj instanceof Short ||
                 obj instanceof Long ||
                 obj instanceof Float ||
-                obj instanceof Character;
+                obj instanceof Character ||
+                obj instanceof Byte;
     }
 
 
