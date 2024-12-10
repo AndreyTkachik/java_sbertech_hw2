@@ -8,7 +8,7 @@ public class BookTest {
     private final int pages;
     private final List<String> genres;
     private final String[] tags;
-    private boolean read;
+    private final boolean read;
 
     public BookTest(String title, String author, int pages, List<String> genres, String[] tags, boolean read) {
         this.title = title;

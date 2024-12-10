@@ -3,105 +3,141 @@ package org.example;
 import java.lang.reflect.*;
 import java.util.*;
 
-public class JSONGenerator implements Serializer {
+public class JSONGenerator<T> implements Serializer<T> {
+    private final StringBuilder builder = new StringBuilder();
+    private final List<Method> methodList = new ArrayList<>();
+    private final List<String> varsNames = new ArrayList<>();
+
+    public JSONGenerator(Class<T> clazz) {
+        Method[] methods = clazz.getDeclaredMethods();
+        getMethodsStartWithGetOrIs(methods, methodList);
+        if (!methodList.isEmpty()) {
+            for (int indx = 0; indx < methodList.size(); ++indx) {
+                String methodName = null;
+                methodName = getMethodName(methodList, indx, methodName);
+                var tempMethodName = methodName.toCharArray();
+                tempMethodName[0] = Character.toLowerCase(tempMethodName[0]);
+                varsNames.add(new String(tempMethodName));
+            }
+        }
+    }
+
+    private void getMethodsStartWithGetOrIs(Method[] methods, List<Method> methodList) {
+        for (Method method : methods) {
+            if ((method.getReturnType() != void.class)
+                    && (method.getParameterTypes().length == 0)) {
+                if ((method.getName().startsWith("get") || method.getName().startsWith("is"))
+                        && method.accessFlags().contains(AccessFlag.PUBLIC)) {
+                    methodList.add(method);
+                }
+            }
+        }
+    }
+
+    private String getMethodName(List<Method> methodList, int indx, String methodName) {
+        Method method = methodList.get(indx);
+        if (method.getName().startsWith("get")) {
+            methodName = method.getName().replace("get", "");
+        } else if (method.getName().startsWith("is")) {
+            methodName = method.getName().replace("is", "");
+        }
+        return methodName;
+    }
 
     @Override
-    public String serialize(Object obj) throws IllegalAccessException, InvocationTargetException {
+    public String serialize (T obj) throws RuntimeException {
+        try {
+            if (obj == null) {
+                return "null";
+            }
+            if (methodList.isEmpty()) {
+                builder.append("{\n}");
+                return builder.toString();
+            }
+            builder.append("{\n");
+            for (int indx = 0; indx < methodList.size(); ++indx) {
+                Object value = methodList.get(indx).invoke(obj);
+                builder.append("\t\"")
+                        .append(varsNames.get(indx))
+                        .append('\"');
+                builder.append(": ");
+                serializeValues(value);
+                builder.append(',');
+                builder.append('\n');
+            }
+            builder.deleteCharAt(builder.length() - 1);
+            builder.append('}');
+            return builder.toString();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void serializeValues(Object obj) throws RuntimeException {
         if (obj == null) {
-            return "null";
+            builder.append("null");
+            return;
         }
         Class<?> clazz = obj.getClass();
         if (clazz.isArray()) {
-            return serializeArray(obj);
+            serializeArray(obj);
         } else if (checkPrimitive(obj)) {
-            return serializePrimitive(obj);
+            serializePrimitive(obj);
         } else if (obj instanceof String) {
-            return serializeString(obj);
+            serializeString(obj);
         } else if (obj instanceof Collection) {
-            return serializeCollection(obj);
+            serializeCollection(obj);
         }
-        return serializeObject(obj);
     }
 
-    @Override
-    public String serializeString(Object obj) {
-        return "\"" + obj + "\"";
+    private void serializeString(Object obj) {
+        builder.append('\"');
+        for (Character c : obj.toString().toCharArray()) {
+            if (c.equals('\n')) {
+                builder.append("\\n");
+            } else if (c.equals('\r')) {
+                builder.append("\\r");
+            } else if (c.equals('\t')) {
+                builder.append("\\t");
+            } else if (c.equals('\\')) {
+                builder.append("\\\"");
+            } else if (c.equals('\'')) {
+                builder.append("\\'");
+            } else {
+                builder.append(c);
+            }
+        }
+        builder.append('\"');
     }
 
-    @Override
-    public String serializeCollection(Object obj) throws IllegalAccessException, InvocationTargetException {
-        StringBuilder builder = new StringBuilder();
-        builder.append("[");
+    private void serializeCollection(Object obj) throws RuntimeException {
+        builder.append('[');
         Iterator<?> it = ((Collection<?>) obj).iterator();
         while (it.hasNext()) {
-            builder.append(serialize(it.next()));
+            serializeValues(it.next());
             if (it.hasNext()) {
-                builder.append(",");
+                builder.append(',');
             }
         }
-        builder.append("]");
-        return builder.toString();
+        builder.append(']');
     }
 
-    @Override
-    public String serializeArray(Object obj) throws IllegalAccessException, InvocationTargetException {
-        StringBuilder builder = new StringBuilder();
-        builder.append("[");
+    private void serializeArray(Object obj) throws RuntimeException {
+        builder.append('[');
         for (int indx = 0; indx < Array.getLength(obj); ++indx) {
-            builder.append(serialize(Array.get(obj, indx)));
+            serializeValues(Array.get(obj, indx));
             if (indx < Array.getLength(obj) - 1) {
-                builder.append(",");
+                builder.append(',');
             }
         }
-        builder.append("]");
-        return builder.toString();
+        builder.append(']');
     }
 
-    @Override
-    public String serializePrimitive(Object obj) {
-        return obj.toString();
+    private void serializePrimitive(Object obj) {
+        builder.append(obj.toString());
     }
 
-    @Override
-    public String serializeObject(Object obj) throws IllegalAccessException, InvocationTargetException {
-        Class<?> clazz = obj.getClass();
-        Method[] methods = clazz.getDeclaredMethods();
-        List<Method> methodList = new ArrayList<>();
-        for (Method method : methods) {
-            if ((method.getName().startsWith("get") || method.getName().startsWith("is"))
-                && method.canAccess(obj)) {
-                methodList.add(method);
-            }
-        }
-        if (methodList.isEmpty()) {
-            return "{\n}";
-        }
-        StringBuilder builder = new StringBuilder();
-        builder.append("{\n");
-        for (int indx = 0; indx < methodList.size(); ++indx) {
-            Object methodProduct = methodList.get(indx).invoke(obj);
-            String methodName = null;
-            if (methodList.get(indx).getName().startsWith("get")) {
-                methodName = methodList.get(indx).getName().replace("get", "");
-            } else if (methodList.get(indx).getName().startsWith("is")) {
-                methodName = methodList.get(indx).getName().replace("is", "");
-            }
-            builder.append("\t\"")
-                    .append(methodName.toLowerCase())
-                    .append("\"");
-            builder.append(": ");
-            builder.append(serialize(methodProduct));
-            if (indx < methodList.size() - 1) {
-                builder.append(",");
-            }
-            builder.append("\n");
-        }
-        builder.append("}");
-        return builder.toString();
-    }
-
-    @Override
-    public boolean checkPrimitive(Object obj) {
+    private boolean checkPrimitive(Object obj) {
         return obj instanceof Integer ||
                 obj instanceof Double ||
                 obj instanceof Boolean ||
@@ -110,13 +146,5 @@ public class JSONGenerator implements Serializer {
                 obj instanceof Float ||
                 obj instanceof Character ||
                 obj instanceof Byte;
-    }
-
-
-    public String generateJSON (Object obj) throws IllegalAccessException, InvocationTargetException {
-        if (obj == null) {
-            return "null";
-        }
-        return serializeObject(obj);
     }
 }

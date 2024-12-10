@@ -21,17 +21,17 @@ class JSONGeneratorTest {
         list.add(null);
         String[] Array = {"aaaa", null};
         BookTest book1 = new BookTest("A", "A", 13, list, Array, false);
-        JSONGenerator test = new JSONGenerator();
-        assertDoesNotThrow(() -> JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true));
+        JSONGenerator<BookTest> test = new JSONGenerator<>(BookTest.class);
+        assertDoesNotThrow(() -> JSONAssert.assertEquals(actualJSON, test.serialize(book1), true));
     }
 
     @Test
     void serializeString() {
-        String actualJSON = "{ \"author\": \"A\", \"title\": null, \"pages\": 0, " +
+        String actualJSON = "{ \"author\": \"A\\n\", \"title\": null, \"pages\": 0, " +
                 "\"genres\": null, \"tags\": null, \"read\": false}";
-        BookTest book1 = new BookTest(null, "A", 0, null, null, false);
-        JSONGenerator test = new JSONGenerator();
-        assertDoesNotThrow(() -> JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true));
+        BookTest book1 = new BookTest(null, "A\n", 0, null, null, false);
+        JSONGenerator<BookTest> test = new JSONGenerator<>(BookTest.class);
+        assertDoesNotThrow(() -> JSONAssert.assertEquals(actualJSON, test.serialize(book1), true));
     }
 
     @Test
@@ -42,8 +42,8 @@ class JSONGeneratorTest {
         list.add("a");
         list.add(null);
         BookTest book1 = new BookTest(null, null, 0, list, null, false);
-        JSONGenerator test = new JSONGenerator();
-        assertDoesNotThrow(() -> JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true));
+        JSONGenerator<BookTest> test = new JSONGenerator<>(BookTest.class);
+        assertDoesNotThrow(() -> JSONAssert.assertEquals(actualJSON, test.serialize(book1), true));
     }
 
     @Test
@@ -52,8 +52,8 @@ class JSONGeneratorTest {
                 "\"genres\": null, \"tags\": [\"aaaa\",null], \"read\": false}";
         String[] Array = {"aaaa", null};
         BookTest book1 = new BookTest(null, null, 0, null, Array, false);
-        JSONGenerator test = new JSONGenerator();
-        assertDoesNotThrow(() ->  JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true));
+        JSONGenerator<BookTest> test = new JSONGenerator<>(BookTest.class);
+        assertDoesNotThrow(() ->  JSONAssert.assertEquals(actualJSON, test.serialize(book1), true));
     }
 
     @Test
@@ -61,8 +61,8 @@ class JSONGeneratorTest {
         String actualJSON = "{ \"author\": null, \"title\": null, \"pages\": 1234124, " +
                 "\"genres\": null, \"tags\": null, \"read\": true}";
         BookTest book1 = new BookTest(null, null, 1234124, null, null, true);
-        JSONGenerator test = new JSONGenerator();
-        assertDoesNotThrow(() -> JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true));
+        JSONGenerator<BookTest> test = new JSONGenerator<>(BookTest.class);
+        assertDoesNotThrow(() -> JSONAssert.assertEquals(actualJSON, test.serialize(book1), true));
     }
 
     @Test
@@ -74,8 +74,8 @@ class JSONGeneratorTest {
         list.add(null);
         String[] Array = {"aaaa", null};
         BookTest book1 = new BookTest("A", "A", 13, list, Array, false);
-        JSONGenerator test = new JSONGenerator();
-        assertDoesNotThrow(() -> JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true));
+        JSONGenerator<BookTest> test = new JSONGenerator<>(BookTest.class);
+        assertDoesNotThrow(() -> JSONAssert.assertEquals(actualJSON, test.serialize(book1), true));
     }
 
     @Test
@@ -87,8 +87,8 @@ class JSONGeneratorTest {
         list.add(null);
         String[] Array = {"aaaa", null};
         BookTest book1 = new BookTest("A", "A", 13, list, Array, false);
-        JSONGenerator test = new JSONGenerator();
-        assertDoesNotThrow(() -> JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true));
+        JSONGenerator<BookTest> test = new JSONGenerator<>(BookTest.class);
+        assertDoesNotThrow(() -> JSONAssert.assertEquals(actualJSON, test.serialize(book1), true));
     }
 
     @Test
@@ -100,7 +100,7 @@ class JSONGeneratorTest {
         list.add(null);
         String[] Array = {"aaaa", null};
         BookTest book1 = new BookTest("A", "A", 13, list, Array, false);
-        JSONGenerator test = new JSONGenerator();
-        assertDoesNotThrow(() -> JSONAssert.assertEquals(actualJSON, test.generateJSON(book1), true));
+        JSONGenerator<BookTest> test = new JSONGenerator<>(BookTest.class);
+        assertDoesNotThrow(() -> JSONAssert.assertEquals(actualJSON, test.serialize(book1), true));
     }
 }
