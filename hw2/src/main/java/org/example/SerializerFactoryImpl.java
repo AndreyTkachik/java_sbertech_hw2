@@ -8,7 +8,7 @@ public class SerializerFactoryImpl<T> implements SerializerFactory<T> {
         GeneratorBuilder builder = new GeneratorBuilder();
         String code = builder.buildCode(clazz);
         Class<?> generatorClass = InMemoryJavaCompiler.newInstance()
-                .compile("org.clazz." + builder.getLatestGeneratorName(), code);
+                .compile("org.clazz." + builder.getLatestGeneratorName(clazz), code);
         return generatorClass.getDeclaredConstructor().newInstance();
     }
 }
