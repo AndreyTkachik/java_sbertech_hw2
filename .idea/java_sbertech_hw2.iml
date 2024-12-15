@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/hw2/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/hw2/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/hw2/src/test/java" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/hw2/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.mdkt.compiler:InMemoryJavaCompiler:1.3.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.json:json:20240303" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.skyscreamer:jsonassert:2.0-rc1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-api:5.8.1" level="project" />
+  </component>
+</module>
